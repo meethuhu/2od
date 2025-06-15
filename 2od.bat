@@ -26,6 +26,13 @@ if errorlevel 1 (
 
 set "SRC=%~1"
 
+:: Prevent linking entire system drive
+if /I "%SRC:~0,3%"=="%SYSTEMDRIVE%\" (
+  echo Error: Linking to the entire system drive is not allowed.
+  pause >nul
+  exit /b 1
+)
+
 :: Validate source exists
 if not exist "%SRC%" (
   echo Error: "%SRC%" does not exist.
